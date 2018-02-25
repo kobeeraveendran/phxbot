@@ -1,0 +1,14 @@
+{
+  "name": "phxbot",
+  "version": "1.0.0",
+  "description": "Discord bot with basic administrative functionaliies",
+  "main": "phxbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kobee Raveendran",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.3.0"
+  }
+}
