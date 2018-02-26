@@ -108,7 +108,7 @@ bot.on("message", async message => {
     // $kick <user> <reason> command
     if(command === `${botconfig.prefix}kick`) {
         // format: $kick <user> <reason>
-        let kickuser = message.guild.member(message.mentions.users.first() || messageu.guild.members.get(args[0]));
+        let kickuser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
 
         if(!kickuser) message.channel.send("Can't find user.");
 
@@ -192,22 +192,33 @@ bot.on("message", async message => {
         //let unbanuser = bot.users.get(args[0]);
         //let userID = bot.users.get('name', args[0]).id;
     
-        let unbanuser = bot.users.get(args[0]);
+        //let unbanuser = bot.users.get(args[0]);
 
         let unbanuser = args[0];
 
+        let userArray = unbanuser.split("#");
+        let unbanusername = userArray[0];
+        let unbanusertag = userArray[1];
+
         if(!unbanuser) return message.channel.send("Couldn't find user.");
 
-        let targetChannel = message.guild.channels.find(`name`, "incidents");
+        //let server = new Discord.Guild();
+        
+        let banlist = message.guild.fetchBans().all();
 
-        let targetUser = targetChannel.find(`name`, args[0]);
+        let i = 0;
 
+        let targetUser = banlist.find(val => {
+            val.username === unbanusername;
+            val.discriminator === unbanusertag;
+        });
+        
         // change later
         if(!message.member.hasPermission("VIEW_CHANNEL")) {
             message.channel.send("Insufficient power to perform requested action.");
         }
 
-        let unbanreason = args.join(" ").slice(22);
+        let unbanreason = args.join(" ").slice(19);
 
         if(!unbanreason) {
             message.channel.send("Please provide a reason for this unban.");
@@ -217,18 +228,19 @@ bot.on("message", async message => {
         let incidentchannel = message.guild.channels.find(`name`, "incidents");
         if(!incidentchannel) return message.channel.send("Couldn't find #incidents channel.");
 
-        message.guild.unban(unbanuser);
+        message.guild.unban(targetUser);
         //message.channel.unbanuser.send("Come back bby " + bot.generateInvite("[VIEW_CHANNEL]"));
-        bot.users.find('id', unbanuser).send("Come back bby: " + bot.generateInvite("[VIEW_CHANNEL]"));
-        incidentchannel.send(unbanEmbed);
+        //bot.users.find('id', unbanuser).send("Come back bby: " + bot.generateInvite("[VIEW_CHANNEL]"));
 
         let unbanEmbed = new Discord.RichEmbed();
         unbanEmbed.setDescription("Welcome Back!");
         unbanEmbed.setColor("#33ff39");
-        unbanEmbed.addField("User Unbanned", `${unbanuser.username} with ID: ` + unbanuser);
+        unbanEmbed.addField("User Unbanned", `${targetUser.username} with ID: ` + targetUser.id);
         unbanEmbed.addField("Unbanned By", `${message.author.username} with ID: ` + message.author.id);
         unbanEmbed.addField("Time", message.createdAt);
         unbanEmbed.addField("Reason for Unban", unbanreason);
+
+        incidentchannel.send(unbanEmbed);
 
         return;
     }
@@ -237,7 +249,7 @@ bot.on("message", async message => {
         let recipient = message.mentions.users.first();
 
         recipient.send("Authomated invite PM test: ");
-        recipient.send(message.channel.createInvite().url);
+        recipient.send("https://discord.gg/jvd6B7u");
         message.channel()
     }
 
