@@ -1,2 +1,2 @@
 # phxbot
-Basic Discord bot written in JavaScript
+Basic Discord bot made for fun, written in JavaScript
