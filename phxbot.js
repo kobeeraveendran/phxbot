@@ -259,7 +259,7 @@ bot.on("message", async message => {
         let i = 0;
 
         if(numTimes > 10 && (message.member.nickname == "frostlich2")) {
-            message.channel.send("Alex saw this coming. Pick a number 10 or less... fgt");
+            message.channel.send("Alex saw this coming. Pick a number 10 or less...");
             return;
         }
 
@@ -276,7 +276,7 @@ bot.on("message", async message => {
         }
 */
         for(i = 0; i < numTimes; i++) {
-            message.channel.send("REEEEEEEEEEEEEEEEEEEE " + `${spamuser}`);
+            message.channel.send("WAKE UP " + `${spamuser}`);
         }
 
         return;
