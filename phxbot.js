@@ -4,7 +4,6 @@ const bot = new Discord.Client();
 
 bot.on("ready", async () => {
     console.log(`${bot.user.username} is online.`);
-    // bot.user.setGame("Being Created");
     bot.user.setActivity("Under Development", {type: "WATCHING"});
 })
 
@@ -107,7 +106,6 @@ bot.on("message", async message => {
 
     // $kick <user> <reason> command
     if(command === `${botconfig.prefix}kick`) {
-        // format: $kick <user> <reason>
         let kickuser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
 
         if(!kickuser) message.channel.send("Can't find user.");
@@ -188,12 +186,6 @@ bot.on("message", async message => {
 
     // $unban <user> <reason> command
     if(command === `${botconfig.prefix}unban`) {
-        //let unbanuser = message.guild.member(message.mentions.user.first() || message.guild.members.get(args[0]));
-        //let unbanuser = bot.users.get(args[0]);
-        //let userID = bot.users.get('name', args[0]).id;
-    
-        //let unbanuser = bot.users.get(args[0]);
-
         let unbanuser = args[0];
 
         let userArray = unbanuser.split("#");
@@ -201,8 +193,6 @@ bot.on("message", async message => {
         let unbanusertag = userArray[1];
 
         if(!unbanuser) return message.channel.send("Couldn't find user.");
-
-        //let server = new Discord.Guild();
         
         let banlist = message.guild.fetchBans().all();
 
@@ -213,7 +203,6 @@ bot.on("message", async message => {
             val.discriminator === unbanusertag;
         });
         
-        // change later
         if(!message.member.hasPermission("VIEW_CHANNEL")) {
             message.channel.send("Insufficient power to perform requested action.");
         }
@@ -229,8 +218,6 @@ bot.on("message", async message => {
         if(!incidentchannel) return message.channel.send("Couldn't find #incidents channel.");
 
         message.guild.unban(targetUser);
-        //message.channel.unbanuser.send("Come back bby " + bot.generateInvite("[VIEW_CHANNEL]"));
-        //bot.users.find('id', unbanuser).send("Come back bby: " + bot.generateInvite("[VIEW_CHANNEL]"));
 
         let unbanEmbed = new Discord.RichEmbed();
         unbanEmbed.setDescription("Welcome Back!");
@@ -269,12 +256,7 @@ bot.on("message", async message => {
         }
 
         if(!spamuser) return message.channel.send("Couldn't find user.");
-/*
-        if(!message.member.hasPermission("MANAGE_MESSAGES")) {
-            message.channel.send("Insufficent power to perform requested action.");
-            return;
-        }
-*/
+
         for(i = 0; i < numTimes; i++) {
             message.channel.send("WAKE UP " + `${spamuser}`);
         }
